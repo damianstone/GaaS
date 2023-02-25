@@ -90,10 +90,15 @@ class UserViewSet(ModelViewSet):
             return Response(message, status=status.HTTP_400_BAD_REQUEST)
         
     def update(self, request, pk=None):
-        user = request.user
-        fields_serializer = serializers.UserSerializer(data=request.data)
-        fields_serializer.is_valid(raise_exception=True)
-    
-        user.save()
-        user_serializer = serializers.UserSerializer(user, many=False)
+        data = request.data
+        try:
+            user_to_update = models.User.objects.get(pk=pk)
+        except:
+            message = {"detail": "User with this email already exist"}
+            return Response(message, status=status.HTTP_400_BAD_REQUEST)
+        
+        user_to_update.firstname = data["firstname"]
+        user_to_update.lastname = data["lastname"]
+        user_to_update.save()
+        user_serializer = serializers.UserSerializer(user_to_update, many=False)
         return Response(user_serializer.data)
