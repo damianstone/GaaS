@@ -51,16 +51,6 @@ REST_FRAMEWORK = {
     "DEFAULT_PAGINATION_CLASS": "service.core.pagination.CustomPagination",
 }
 
-# lo que hace el websocket en este caso es que cuando el usuario enviar un mensaje este va al websocket y el webcocket le envia esta informacion automaticamente a los otros miembros del grupo
-CHANNEL_LAYERS = {
-    "default": {
-        "BACKEND": "channels_redis.core.RedisChannelLayer",
-        "CONFIG": {
-            "hosts": [("127.0.0.1", 6379)],
-        },
-    },
-}
-
 AUTH_USER_MODEL = "api.User"
 
 # SIMPLE JWT TO CREATE JSON ACCESS TOKENS
