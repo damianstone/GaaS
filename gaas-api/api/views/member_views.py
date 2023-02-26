@@ -54,7 +54,33 @@ class MemberViewSet(ModelViewSet):
           return Response({"detail": "members created"}, status=status.HTTP_200_OK)
         else:
           return Response({"detail": "members already created"}, status=status.HTTP_400_BAD_REQUEST)
-            
+    
+    @action(detail=True, methods=["post"], url_path=r"actions/approve")
+    def approve(self, request, pk=None):
+        current_user = request.user
+
+        try:
+            member = models.Member.objects.get(pk=pk)
+            member.approve(current_user)
+        except:
+            return Response({"detail": "member doesnt exist"})
+        
+        serializer = serializers.MemberSerializer(member, many=False)
+        return Response(serializer.data)
+
+    @action(detail=True, methods=["post"], url_path=r"actions/disapprove")
+    def disapprove(self, request, pk=None):
+        current_user = request.user
+
+        try:
+            member = models.Member.objects.get(pk=pk)
+            member.disapprove(current_user)
+        except:
+            return Response({"detail": "member doesnt exist"})
+
+        serializer = serializers.MemberSerializer(member, many=False)
+        return Response(serializer.data)
+      
     
     @action(detail=False, methods=["post"], url_path=r"actions/destroy-all")
     def destroy_all(self, request):
