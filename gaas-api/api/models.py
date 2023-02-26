@@ -59,9 +59,9 @@ class Member(models.Model):
 
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     approvals = models.ManyToManyField(
-        User, blank=True, related_name="member_approvals")
+        User, blank=True, related_name="approvals")
     disapprovals = models.ManyToManyField(
-        User, blank=True, related_name="member_disapprovals")
+        User, blank=True, related_name="disapprovals")
     followers = models.ManyToManyField(
         User, blank=True, related_name="member_followers")
 
@@ -76,6 +76,24 @@ class Member(models.Model):
         null=True,
         blank=False,
     )
+    
+    def approve(self, user):
+        if user not in self.approvals.all():
+            self.approvals.add(user)
+            # remove from negative votes if exists
+            if user in self.disapprovals.all():
+                self.disapprovals.remove(user)
+        else:
+            self.approvals.remove(user)
+
+    def disapprove(self, user):
+        if user not in self.disapprovals.all():
+            self.disapprovals.add(user)
+            # remove from positive votes if exists
+            if user in self.approvals.all():
+                self.approvals.remove(user)
+        else:
+            self.disapprovals.remove(user)
 
 
 class Proposal(models.Model):
