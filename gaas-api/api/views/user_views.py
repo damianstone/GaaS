@@ -77,3 +77,8 @@ class UserViewSet(ModelViewSet):
         user_serializer = serializers.UserSerializer(
             user_to_update, many=False)
         return Response(user_serializer.data)
+
+    # test
+    @action(detail=False, methods=["get"], permission_classes=[AllowAny], url_path="test")
+    def test(self, request):
+        return Response({"message": "test"})
