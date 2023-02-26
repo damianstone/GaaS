@@ -22,3 +22,8 @@ class PhotoSerializer(serializers.Serializer):
         required=True, allow_null=False, max_length=None, use_url=True
     )
     
+class MemberSerializer (serializers.ModelSerializer):
+    
+    class Meta:
+        model = models.Member
+        fields = "__all__"

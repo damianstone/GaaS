@@ -1,6 +1,6 @@
 from django.urls import path, include
 from rest_framework import routers
-from .views import user_views
+from .views import user_views, member_views
 
 router = routers.DefaultRouter()
 
@@ -8,6 +8,12 @@ router.register(
     r"users",
     user_views.UserViewSet,
     basename="user",
+)
+
+router.register(
+    r"members",
+    member_views.MemberViewSet,
+    basename="member",
 )
 
 urlpatterns = [

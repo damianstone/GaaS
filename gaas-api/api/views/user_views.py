@@ -29,7 +29,6 @@ class UserViewSet(ModelViewSet):
     queryset = models.User.objects.all()
     serializer_class = serializers.UserSerializer
     permission_classes = [IsAuthenticated]
-    pagination_class = CustomPagination
 
     def get_permissions(self):
         if self.action == "create":
