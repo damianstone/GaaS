@@ -1,5 +1,5 @@
 from rest_framework import status
-from rest_framework.decorators import api_view, permission_classes
+from rest_framework.decorators import api_view, permission_classes, action
 from rest_framework.permissions import IsAuthenticated, IsAdminUser, AllowAny
 from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet
@@ -25,32 +25,6 @@ class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
 class MyTokenObtainPairView(TokenObtainPairView):
     serializer_class = MyTokenObtainPairSerializer
 
-
-# * First way of create endpoints
-@api_view(["POST"])
-@permission_classes([AllowAny])
-def register_user(request):
-    data = request.data
-    password = data["password"]
-    repeated_password = data["repeated_password"]
-
-    if password != repeated_password:
-        message = {"detail": "Your password does not match"}
-        return Response(message, status=status.HTTP_400_BAD_REQUEST)
-
-    try:
-        # create a new user data model
-        user = models.User.objects.create(
-            email=data["email"], password=make_password(data["password"])
-        )
-        serializer = serializers.UserSerializer(user, many=False)
-        return Response(serializer.data)
-    except:
-        message = {"detail": "User with this email already exist"}
-        return Response(message, status=status.HTTP_400_BAD_REQUEST)
-
-
-# * second way of create endpoints
 class UserViewSet(ModelViewSet):
     queryset = models.User.objects.all()
     serializer_class = serializers.UserSerializer
@@ -66,7 +40,7 @@ class UserViewSet(ModelViewSet):
         user = models.User.objects.get(pk=pk)
         serializer = serializers.UserSerializer(user, many=False)
         return Response(serializer.data, status=status.HTTP_200_OK)
-    
+
     # register user
     def create(self, request):
         data = request.data
@@ -88,7 +62,7 @@ class UserViewSet(ModelViewSet):
         except:
             message = {"detail": "User with this email already exist"}
             return Response(message, status=status.HTTP_400_BAD_REQUEST)
-        
+
     def update(self, request, pk=None):
         data = request.data
         try:
@@ -96,9 +70,10 @@ class UserViewSet(ModelViewSet):
         except:
             message = {"detail": "User with this email already exist"}
             return Response(message, status=status.HTTP_400_BAD_REQUEST)
-        
+
         user_to_update.firstname = data["firstname"]
         user_to_update.lastname = data["lastname"]
         user_to_update.save()
-        user_serializer = serializers.UserSerializer(user_to_update, many=False)
+        user_serializer = serializers.UserSerializer(
+            user_to_update, many=False)
         return Response(user_serializer.data)

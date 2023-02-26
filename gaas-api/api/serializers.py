@@ -10,7 +10,7 @@ class UserSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = models.User
-        fields = "__all__"
+        exclude = ["password"]
 
     def get_token(self, obj):
         token = RefreshToken.for_user(obj)

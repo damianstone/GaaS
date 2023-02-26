@@ -24,5 +24,6 @@ class User(AbstractBaseUser, PermissionsMixin):
     def get_full_name(self):
         return self.firstname + self.lastname
 
+# * MEMBER
 # * PROPOSAL MODEL
-
+# * COMMENT MODEL
