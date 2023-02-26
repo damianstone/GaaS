@@ -33,3 +33,9 @@ venv-gaas
 .coverage
 
 #Images
+
+# migrations
+*/migrations/*
+
+# tests
+test_*.py
