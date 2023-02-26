@@ -15,7 +15,7 @@ from service.core.pagination import CustomPagination
 
 # * proposal viewset
 
-# add comment to proposal
+# * add comment to proposal
 
 
 class ProposalViewSet(ModelViewSet):
@@ -102,3 +102,37 @@ class ProposalViewSet(ModelViewSet):
             return Response({"detail": "proposal doesnt exist"})
 
         return Response({"detail": "downvote success"})
+
+    # add comment endpoint
+    @action(detail=True, methods=["post"], url_path=r"actions/add_comment")
+    def add_comment(self, request, pk=None):
+        current_user = request.user
+        data = request.data
+
+        content = data["content"]
+
+        try:
+            proposal = models.Proposal.objects.get(pk=pk)
+
+            # create a new comment data model
+            comment = models.Comment.objects.create(
+                content=content, author=current_user, proposal=proposal)
+
+            serializer = serializers.CommentSerializer(comment, many=False)
+            return Response(serializer.data)
+        except:
+            message = {"detail": "error with adding comment"}
+            return Response(message, status=status.HTTP_400_BAD_REQUEST)
+
+    # get comments endpoint
+    @action(detail=True, methods=["get"], url_path=r"actions/get_comments")
+    def get_comments(self, request, pk=None):
+        try:
+            proposal = models.Proposal.objects.get(pk=pk)
+            comments = proposal.comments.all()
+            serializer = serializers.ProposalCommentSerializer(
+                comments, many=True)
+            return Response(serializer.data)
+        except:
+            message = {"detail": "error with getting comments"}
+            return Response(message, status=status.HTTP_400_BAD_REQUEST)

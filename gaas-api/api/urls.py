@@ -10,8 +10,12 @@ router.register(
     basename="user",
 )
 
-router.register(r"proposals", proposal_views.ProposalViewSet,
-                basename="proposal")
+router.register(
+    r"proposals",
+    proposal_views.ProposalViewSet,
+    basename="proposal"
+)
+
 
 urlpatterns = [
     path(
@@ -19,6 +23,5 @@ urlpatterns = [
         user_views.MyTokenObtainPairView.as_view(),
         name="token_obtain_pair",
     ),
-    # path("users/register/", user_views.register_user, name="register"),
     path("", include(router.urls)),
 ]
