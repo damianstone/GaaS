@@ -58,7 +58,6 @@ class Member(models.Model):
     )
 
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    public_id = models.CharField(max_length=200, unique=True, null=False)
     approvals = models.ManyToManyField(
         User, blank=True, related_name="member_approvals")
     disapprovals = models.ManyToManyField(
