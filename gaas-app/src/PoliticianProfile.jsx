@@ -120,7 +120,8 @@ function PoliticianProfile(props) {
         Party: {politician.party}
       </div>
       <div>
-        Term Start: {politician.termStart}        </div>
+        Term Start: {politician.termStart}        
+      </div>
       <div>
         Term End: {politician.termEnd}
       </div>
