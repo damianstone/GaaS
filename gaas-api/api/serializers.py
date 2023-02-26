@@ -5,8 +5,40 @@ from api import models
 from rest_framework_simplejwt.tokens import RefreshToken
 
 
+class AuthorSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.User
+        fields = ["id", "email", "firstname", "lastname"]
+
+
+class ProposalCommentSerializer(serializers.ModelSerializer):
+    author = AuthorSerializer(read_only=True, many=False)
+
+    class Meta:
+        model = models.Comment
+        exclude = ["proposal"]
+
+
+class CommentSerializer(serializers.ModelSerializer):
+    author = AuthorSerializer(read_only=True, many=False)
+
+    class Meta:
+        model = models.Comment
+        fields = "__all__"
+
+
+class ProposalSerializer(serializers.ModelSerializer):
+    author = AuthorSerializer(read_only=True, many=False)
+    comments = ProposalCommentSerializer(many=True, read_only=True)
+
+    class Meta:
+        model = models.Proposal
+        fields = "__all__"
+
+
 class UserSerializer(serializers.ModelSerializer):
     token = serializers.SerializerMethodField(read_only=True)
+    proposals = ProposalSerializer(many=True, read_only=True)
 
     class Meta:
         model = models.User

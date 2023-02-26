@@ -58,5 +58,48 @@ class Member(models.Model):
     disapprovals = models.ManyToManyField(User, blank=True, related_name="member_disapprovals")
     followers = models.ManyToManyField(User, blank=True, related_name="member_followers")
 
+
 # * PROPOSAL MODEL
+class Proposal(models.Model):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    author = models.ForeignKey(User, on_delete=models.CASCADE)
+    title = models.CharField(max_length=200)
+    summary = models.TextField()
+    content = models.TextField()
+    positive_votes = models.ManyToManyField(
+        User, related_name="positive_votes")
+    negative_votes = models.ManyToManyField(
+        User, related_name="negative_votes")
+    created_at = models.DateTimeField(default=timezone.now)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    def upvote(self, user):
+        if user not in self.positive_votes.all():
+            self.positive_votes.add(user)
+            # remove from negative votes if exists
+            if user in self.negative_votes.all():
+                self.negative_votes.remove(user)
+        else:
+            self.positive_votes.remove(user)
+
+    def downvote(self, user):
+        if user not in self.negative_votes.all():
+            self.negative_votes.add(user)
+            # remove from positive votes if exists
+            if user in self.positive_votes.all():
+                self.positive_votes.remove(user)
+        else:
+            self.negative_votes.remove(user)
+
+
 # * COMMENT MODEL
+
+
+class Comment(models.Model):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    author = models.ForeignKey(User, on_delete=models.CASCADE)
+    proposal = models.ForeignKey(
+        Proposal, on_delete=models.CASCADE, related_name='comments')
+    content = models.TextField()
+    created_at = models.DateTimeField(default=timezone.now)
+    updated_at = models.DateTimeField(auto_now=True)
