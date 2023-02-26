@@ -7,13 +7,13 @@ from api import models, serializers
 from service.core.pagination import CustomPagination
 
 
-# upvote proposal
-# check if user alrady upvoted or downvoted
-# if user already downvoted, remove from downvote relationship and add to upvote relationship
+# * upvote proposal
+# * check if user alrady upvoted or downvoted
+# * if user already downvoted, remove from downvote relationship and add to upvote relationship
 
-# downvote proposal
+# * downvote proposal
 
-# proposal viewset
+# * proposal viewset
 
 # add comment to proposal
 
@@ -22,7 +22,6 @@ class ProposalViewSet(ModelViewSet):
     queryset = models.Proposal.objects.all()
     serializer_class = serializers.ProposalSerializer
     permission_classes = [IsAuthenticated]
-    pagination_class = CustomPagination
 
     def get_permissions(self):
         if self.action == "list":
@@ -36,6 +35,7 @@ class ProposalViewSet(ModelViewSet):
 
     #  create proposal
     def create(self, request):
+        current_user = request.user
         data = request.data
         title = data["title"]
         summary = data["summary"]
@@ -76,3 +76,29 @@ class ProposalViewSet(ModelViewSet):
         serializer = serializers.ProposalSerializer(
             proposal_to_update, many=False)
         return Response(serializer.data)
+
+    # upvote endpoint
+    @action(detail=True, methods=["post"], url_path=r"actions/upvote")
+    def upvote(self, request, pk=None):
+        current_user = request.user
+
+        try:
+            proposal = models.Proposal.objects.get(pk=pk)
+            proposal.upvote(current_user)
+        except:
+            return Response({"detail": "proposal doesnt exist"})
+
+        return Response({"detail": "upvote success"})
+
+    # downvote endpoint
+    @action(detail=True, methods=["post"], url_path=r"actions/downvote")
+    def downvote(self, request, pk=None):
+        current_user = request.user
+
+        try:
+            proposal = models.Proposal.objects.get(pk=pk)
+            proposal.downvote(current_user)
+        except:
+            return Response({"detail": "proposal doesnt exist"})
+
+        return Response({"detail": "downvote success"})

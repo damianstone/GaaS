@@ -43,22 +43,23 @@ class Proposal(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
 
     def upvote(self, user):
-        if user not in self.positive_votes:
+        if user not in self.positive_votes.all():
             self.positive_votes.add(user)
             # remove from negative votes if exists
-            if user in self.negative_votes:
+            if user in self.negative_votes.all():
                 self.negative_votes.remove(user)
         else:
             self.positive_votes.remove(user)
 
     def downvote(self, user):
-        if user not in self.downvote:
+        if user not in self.negative_votes.all():
             self.negative_votes.add(user)
             # remove from positive votes if exists
-            if user in self.positive_votes:
-                self.negative_votes.remove(user)
+            if user in self.positive_votes.all():
+                self.positive_votes.remove(user)
         else:
             self.negative_votes.remove(user)
+
 
 # * COMMENT MODEL
 
