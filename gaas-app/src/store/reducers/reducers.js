@@ -1,4 +1,4 @@
-import * as c from '../../constants';
+import * as c from '../../constants/constants';
 
 export const userRegisterReducer = (state = {}, action) => {
   switch (action.type) {
@@ -15,8 +15,6 @@ export const userRegisterReducer = (state = {}, action) => {
         loading: false,
         error: action.payload,
       };
-    case c.USER_REGISTER_RESET:
-      return {};
     default:
       return state;
   }
@@ -39,8 +37,6 @@ export const userLoginReducer = (state = {}, action) => {
         loading: false,
         error: action.payload,
       };
-    case c.LOGIN_RESET:
-      return {};
     default:
       return state;
   }

@@ -1,5 +1,5 @@
 import axios from 'axios';
-import * as c from '../../constants';
+import * as c from '../../constants/constants';
 
 const BASE_URL = 'http://127.0.0.1:8000';
 
