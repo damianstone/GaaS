@@ -1,30 +1,34 @@
-import logo from './logo.svg';
-import './App.css';
-// import React from "react";
-// import CountryForm from "./CountryForm";
+import React from 'react';
+import { Container } from 'react-bootstrap';
+import { HashRouter as Router, Route } from 'react-router-dom';
 
-function App() {
+import Header from './components/Header';
+import Footer from './components/Footer';
+
+import './App.css';
+
+
+const App = () => {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-      {/* <h1>
-        Welcome to a Virtual Democracy!
-      </h1>
-      <CountryForm /> */}
-    </div>
+    <Router>
+      <Header />
+      <main className='py-3'>
+        <Container>
+          {/* 
+          <Route path='/' component={HomeScreen} exact />
+          <Route path='/login' component={LoginScreen} />
+          <Route path='/register' component={RegisterScreen} /> 
+          <Route path='/myprofile' component={RegisterScreen} /> 
+          <Route path='/proposals' component={RegisterScreen} /> 
+          <Route path='/proposals:id' component={RegisterScreen} /> 
+          <Route path='/create-proposal' component={RegisterScreen} /> 
+          <Route path='/view-members' component={RegisterScreen} /> 
+          <Route path='/view-members:id' component={RegisterScreen} /> 
+          */}
+        </Container>
+      </main>
+      <Footer />
+    </Router>
   );
 };
 

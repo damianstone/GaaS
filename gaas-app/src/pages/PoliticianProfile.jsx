@@ -109,10 +109,10 @@ function PoliticianProfile(props) {
       <PerformanceRating
         monthlyRecords={monthlyRecords} 
       />
-      <ReelectionStatus
+      {/* <ReelectionStatus
         performanceRating={averageRating}
         threshold={threshold}
-      />
+      /> */}
       <h2>
         {politician.name}
       </h2>

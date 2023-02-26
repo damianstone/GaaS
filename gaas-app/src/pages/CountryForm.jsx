@@ -2,11 +2,9 @@ import React, { useState } from "react";
 
 const CountryForm = () => {
   const [name, setName] = useState("");
-  const [description, setDescription] = useState("");
   const [location, setLocation] = useState("");
   const [currency, setCurrency] = useState("");
   const [governmentType, setGovernmentType] = useState("");
-  const [population, setPopulation] = useState("");
   const [language, setLanguage] = useState("");
 
   const handleSubmit = (e) => {
