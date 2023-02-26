@@ -54,3 +54,4 @@ txaio==22.2.1
 typing_extensions==4.4.0
 whitenoise==6.0.0
 zope.interface==5.5.0
+requests==2.28.2

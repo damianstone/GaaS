@@ -1,21 +1,9 @@
 from rest_framework import status
-from rest_framework.decorators import api_view, permission_classes, action
-from rest_framework.permissions import IsAuthenticated, IsAdminUser, AllowAny
+from rest_framework.decorators import action
+from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet
 from api import models, serializers
-from service.core.pagination import CustomPagination
-
-
-# * upvote proposal
-# * check if user alrady upvoted or downvoted
-# * if user already downvoted, remove from downvote relationship and add to upvote relationship
-
-# * downvote proposal
-
-# * proposal viewset
-
-# * add comment to proposal
 
 
 class ProposalViewSet(ModelViewSet):
