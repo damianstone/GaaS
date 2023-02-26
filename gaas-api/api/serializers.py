@@ -55,7 +55,10 @@ class PhotoSerializer(serializers.Serializer):
     )
     
 class MemberSerializer (serializers.ModelSerializer):
-    
+    parliament_house = serializers.CharField(
+        source="get_parliament_house_display", required=False, allow_null=False
+    )
     class Meta:
         model = models.Member
         fields = "__all__"
+

@@ -16,7 +16,7 @@ router.register(
     basename="member",
 )
 
-router.register (
+router.register(
     r"proposals",
     proposal_views.ProposalViewSet,
     basename="proposal"
@@ -24,6 +24,16 @@ router.register (
 
 
 urlpatterns = [
+    path(
+        "display/commons/",
+        user_views.display_commons_parties,
+        name="display-parties-commons",
+    ),
+    path(
+        "display/lords/",
+        user_views.display_lords_parties,
+        name="display-parties-lords",
+    ),
     path(
         "users/login/",
         user_views.MyTokenObtainPairView.as_view(),

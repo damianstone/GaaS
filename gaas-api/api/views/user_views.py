@@ -1,11 +1,11 @@
 from rest_framework import status
-from rest_framework.decorators import api_view, permission_classes, action
-from rest_framework.permissions import IsAuthenticated, IsAdminUser, AllowAny
+from rest_framework.decorators import action, api_view
+from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet
 from api import models, serializers
-from service.core.pagination import CustomPagination
 from django.contrib.auth.hashers import make_password
+import requests
 
 # simple json token
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
@@ -24,6 +24,28 @@ class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
 
 class MyTokenObtainPairView(TokenObtainPairView):
     serializer_class = MyTokenObtainPairSerializer
+
+    
+@api_view(["GET"])
+def display_commons_parties(self, request, pk=None):
+    url = "https://members-api.parliament.uk/api/Parties/GetActive/2/"
+    headers = {"accept": "text/plain"}
+    response = requests.get(url, headers=headers)
+    if response.status_code == 200:
+        return Response(response.json())
+    else:
+        return Response({"detail": "Error: Unable to fetch data from external API"}, status=response.status_code)
+    
+@api_view(["GET"])
+def display_lords_parties(self, request, pk=None):
+    url = "https://members-api.parliament.uk/api/Parties/GetActive/1/"
+    headers = {"accept": "text/plain"}
+    response = requests.get(url, headers=headers)
+    if response.status_code == 200:
+        return Response(response.json())
+    else:
+        return Response({"detail": "Error: Unable to fetch data from external API"}, status=response.status_code)
+
 
 class UserViewSet(ModelViewSet):
     queryset = models.User.objects.all()
@@ -62,20 +84,24 @@ class UserViewSet(ModelViewSet):
         data = request.data
         
         try:
-            user_to_update = models.User.objects.get(pk=pk)
+            user = models.User.objects.get(pk=pk)
         except:
             message = {"detail": "User with this email already exist"}
             return Response(message, status=status.HTTP_400_BAD_REQUEST)
         
-        if current_user.id != user_to_update.id:
+        if current_user.id != user.id:
             message = {"detail": "Update other users is not allowed"}
             return Response(message, status=status.HTTP_401_UNAUTHORIZED)
 
-        user_to_update.firstname = data["firstname"]
-        user_to_update.lastname = data["lastname"]
-        user_to_update.save()
+        if data["firstname"]:
+            user.firstname = data["firstname"]
+        if data["lastname"]:
+            user.lastname = data["lastname"]
+        if data["party"]:
+            user.party = data["party"]
+        user.save()
         user_serializer = serializers.UserSerializer(
-            user_to_update, many=False)
+            user, many=False)
         return Response(user_serializer.data)
     
     @action(detail=True, methods=["post"], url_path=r"actions/follow-user")
@@ -123,3 +149,12 @@ class UserViewSet(ModelViewSet):
         
         serializer = serializers.UserSerializer(current_user)
         return Response(serializer.data)
+
+    @action(detail=False, methods=["post"], url_path=r"actions/run-candidate")
+    def add_photo(self, request, pk=None):
+        current_user = request.user
+        current_user.is_candidate = True
+        current_user.save()
+        serializer = serializers.UserSerializer(current_user)
+        return Response(serializer.data)
+    

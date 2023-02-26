@@ -6,15 +6,14 @@ from model_utils import Choices
 from .managers import CustomUserManager
 
 
-
 class User(AbstractBaseUser, PermissionsMixin):
-    
+
     PARTIES = Choices(
         ("party1", "Party1"),
         ("party2", "Party2"),
         ("party3", "Party3"),
     )
-        
+
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     email = models.CharField(max_length=200, unique=True)
     firstname = models.CharField(max_length=200, null=True)
@@ -22,9 +21,10 @@ class User(AbstractBaseUser, PermissionsMixin):
     password = models.CharField(max_length=200)
     is_staff = models.BooleanField(default=False)
     is_active = models.BooleanField(default=True)
+    is_candidate = models.BooleanField(default=True)
     created_at = models.DateTimeField(default=timezone.now)
     photo = models.ImageField(null=True, blank=True)
-    
+
     party = models.CharField(
         choices=PARTIES,
         default=None,
@@ -32,7 +32,7 @@ class User(AbstractBaseUser, PermissionsMixin):
         null=True,
         blank=False,
     )
-    
+
     followers = models.ManyToManyField(
         "self", symmetrical=False, related_name="followed_by", blank=True
     )
@@ -45,21 +45,40 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     def get_full_name(self):
         return self.firstname + self.lastname
-    
+
     def delete(self):
         self.photo.delete(save=False)
         super().delete()
 
-# * MEMBER
+
 class Member(models.Model):
+    PARLIAMENT_HOUSES = Choices(
+        ("1", "Lords House"),
+        ("2", "Commons House"),
+    )
+
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     public_id = models.CharField(max_length=200, unique=True, null=False)
-    approvals = models.ManyToManyField(User, blank=True, related_name="member_approvals")
-    disapprovals = models.ManyToManyField(User, blank=True, related_name="member_disapprovals")
-    followers = models.ManyToManyField(User, blank=True, related_name="member_followers")
+    approvals = models.ManyToManyField(
+        User, blank=True, related_name="member_approvals")
+    disapprovals = models.ManyToManyField(
+        User, blank=True, related_name="member_disapprovals")
+    followers = models.ManyToManyField(
+        User, blank=True, related_name="member_followers")
+
+    name = models.CharField(max_length=200, null=True)
+    photo = models.ImageField(null=True, blank=True)
+    is_active_member = models.CharField(max_length=200, null=True)
+    party_name = models.CharField(max_length=200, null=True)
+    parliament_house = models.CharField(
+        choices=PARLIAMENT_HOUSES,
+        default=None,
+        max_length=30,
+        null=True,
+        blank=False,
+    )
 
 
-# * PROPOSAL MODEL
 class Proposal(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     author = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -90,9 +109,6 @@ class Proposal(models.Model):
                 self.positive_votes.remove(user)
         else:
             self.negative_votes.remove(user)
-
-
-# * COMMENT MODEL
 
 
 class Comment(models.Model):
