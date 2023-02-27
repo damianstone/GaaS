@@ -50,12 +50,9 @@ export const login = (email, password) => {
     try {
       dispatch({ type: c.LOGIN_REQUEST });
 
-      const userData = JSON.parse(await localStorage.getItem('@userData'));
-
       const config = {
         'Content-Type': 'application/json',
         Accept: 'application/json',
-        Authorization: `Bearer ${userData.token}`,
       };
 
       const { data } = await axios({
@@ -257,11 +254,11 @@ export const listProposals = () => {
     try {
       dispatch({ type: c.LIST_PROP_REQUEST });
 
-      const userData = JSON.parse(await localStorage.getItem('@userData'));
+      const userData = JSON.parse(localStorage.getItem('@userData'));
+      console.log('user data -> ', userData);
 
       const config = {
         'Content-Type': 'application/json',
-        Accept: 'application/json',
         Authorization: `Bearer ${userData.token}`,
       };
 

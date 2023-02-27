@@ -30,7 +30,13 @@ const reducer = combineReducers({
   negativeVote: negativeVoteReducer,
 });
 
-const initialState = {};
+const userInfoFromStorage = localStorage.getItem('@userData')
+  ? JSON.parse(localStorage.getItem('@userData'))
+  : null;
+
+const initialState = {
+  userLogin: { userInfo: userInfoFromStorage },
+};
 
 const middleware = [thunk];
 
