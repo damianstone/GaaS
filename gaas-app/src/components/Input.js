@@ -7,7 +7,7 @@ const Input = (props) => {
     <Box
       component='form'
       sx={{
-        '& .MuiTextField-root': { m: 1, width: '25ch' },
+        '& .MuiTextField-root': { m: 1, width: '25ch', color: '#0000' },
       }}
       noValidate
       autoComplete='off'
@@ -16,7 +16,8 @@ const Input = (props) => {
         <TextField
           required
           id='outlined-required'
-          label='Required'
+          label={props.label}
+          type={props.type}
           defaultValue={props.defaultValue}
           onChange={props.onChange}
           value={props.value}

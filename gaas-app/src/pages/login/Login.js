@@ -15,7 +15,6 @@ const Login = () => {
 
   useEffect(() => {}, []);
 
-  const handleOnchange = () => {};
   return (
     <div className='screen'>
       <div className='welcomeContainer'>
@@ -23,20 +22,32 @@ const Login = () => {
       </div>
       <div className='inputContainer'>
         <Input
-          onChange={handleOnchange}
+          onChange={(e) => setEmail(e.target.value)}
+          label='email'
           value={email}
-          defaultValue='hello@gmail.com'
         />
         <Input
-          onChange={handleOnchange}
+          onChange={(e) => setPassword(e.target.value)}
           value={password}
-          defaultValue='hello@gmail.com'
+          label='password'
         />
-        <Input
-          onChange={handleOnchange}
-          value={repeatedPassword}
-          defaultValue='hello@gmail.com'
-        />
+        {register ? (
+          <Input
+            onChange={(e) => setRepeatedPassword(e.target.value)}
+            label='Repeat password'
+            value={repeatedPassword}
+          />
+        ) : null}
+      </div>
+      <div className='createContainerButton'>
+        <p className='createButton' onClick={() => {}}>
+          {register ? 'Register' : 'Login'}
+        </p>
+        {register ? (
+          <p className='text'>Already have an account ?</p>
+        ) : (
+          <p className='text'>Register</p>
+        )}
       </div>
     </div>
   );
