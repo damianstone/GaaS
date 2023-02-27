@@ -1,7 +1,7 @@
-import axios from 'axios';
-import * as c from '../../constants/constants';
+import axios from "axios";
+import * as c from "../../constants/constants";
 
-const BASE_URL = 'http://127.0.0.1:8000';
+const BASE_URL = "http://127.0.0.1:8000";
 
 // * USER ACTIONS
 
@@ -11,11 +11,11 @@ export const register = (email, password, repeated_password) => {
       dispatch({ type: c.USER_REGISTER_REQUEST });
 
       const config = {
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
       };
 
       const { data } = await axios({
-        method: 'POST',
+        method: "POST",
         url: `${BASE_URL}/api/users/register/`,
         headers: config,
         data: {
@@ -26,7 +26,7 @@ export const register = (email, password, repeated_password) => {
       });
 
       await localStorage.setItem(
-        '@userData',
+        "@userData",
         JSON.stringify({
           token: data.token,
         })
@@ -50,16 +50,13 @@ export const login = (email, password) => {
     try {
       dispatch({ type: c.LOGIN_REQUEST });
 
-      const userData = JSON.parse(await localStorage.getItem('@userData'));
-
       const config = {
-        'Content-Type': 'application/json',
-        Accept: 'application/json',
-        Authorization: `Bearer ${userData.token}`,
+        "Content-Type": "application/json",
+        Accept: "application/json",
       };
 
       const { data } = await axios({
-        method: 'POST',
+        method: "POST",
         url: `${BASE_URL}/api/users/login/`,
         headers: config,
         data: {
@@ -69,7 +66,7 @@ export const login = (email, password) => {
       });
 
       await localStorage.setItem(
-        '@userData',
+        "@userData",
         JSON.stringify({
           token: data.token,
         })
@@ -93,16 +90,16 @@ export const followUser = (id) => {
     try {
       dispatch({ type: c.FOLLOW_USER_REQUEST });
 
-      const userData = JSON.parse(await localStorage.getItem('@userData'));
+      const userData = JSON.parse(await localStorage.getItem("@userData"));
 
       const config = {
-        'Content-Type': 'application/json',
-        Accept: 'application/json',
+        "Content-Type": "application/json",
+        Accept: "application/json",
         Authorization: `Bearer ${userData.token}`,
       };
 
       const { data } = await axios({
-        method: 'POST',
+        method: "POST",
         url: `${BASE_URL}/api/users/${id}/actions/follow`,
         headers: config,
       });
@@ -127,16 +124,16 @@ export const listMembers = () => {
     try {
       dispatch({ type: c.LIST_MEMBERS_REQUEST });
 
-      const userData = JSON.parse(await localStorage.getItem('@userData'));
+      const userData = JSON.parse(await localStorage.getItem("@userData"));
 
       const config = {
-        'Content-Type': 'application/json',
-        Accept: 'application/json',
+        "Content-Type": "application/json",
+        Accept: "application/json",
         Authorization: `Bearer ${userData.token}`,
       };
 
       const { data } = await axios({
-        method: 'GET',
+        method: "GET",
         url: `${BASE_URL}/api/members/`,
         headers: config,
       });
@@ -159,16 +156,16 @@ export const getMember = (id) => {
     try {
       dispatch({ type: c.GET_MEMBER_REQUEST });
 
-      const userData = JSON.parse(await localStorage.getItem('@userData'));
+      const userData = JSON.parse(await localStorage.getItem("@userData"));
 
       const config = {
-        'Content-Type': 'application/json',
-        Accept: 'application/json',
+        "Content-Type": "application/json",
+        Accept: "application/json",
         Authorization: `Bearer ${userData.token}`,
       };
 
       const { data } = await axios({
-        method: 'GET',
+        method: "GET",
         url: `${BASE_URL}/api/members/${id}/`,
         headers: config,
       });
@@ -191,16 +188,16 @@ export const approveMember = (id) => {
     try {
       dispatch({ type: c.APPROVE_MEMBER_REQUEST });
 
-      const userData = JSON.parse(await localStorage.getItem('@userData'));
+      const userData = JSON.parse(await localStorage.getItem("@userData"));
 
       const config = {
-        'Content-Type': 'application/json',
-        Accept: 'application/json',
+        "Content-Type": "application/json",
+        Accept: "application/json",
         Authorization: `Bearer ${userData.token}`,
       };
 
       const { data } = await axios({
-        method: 'POST',
+        method: "POST",
         url: `${BASE_URL}/api/members/${id}/actions/approve/`,
         headers: config,
       });
@@ -223,16 +220,16 @@ export const disapproveMember = (id) => {
     try {
       dispatch({ type: c.DISAPPROVE_MEMBER_REQUEST });
 
-      const userData = JSON.parse(await localStorage.getItem('@userData'));
+      const userData = JSON.parse(await localStorage.getItem("@userData"));
 
       const config = {
-        'Content-Type': 'application/json',
-        Accept: 'application/json',
+        "Content-Type": "application/json",
+        Accept: "application/json",
         Authorization: `Bearer ${userData.token}`,
       };
 
       const { data } = await axios({
-        method: 'POST',
+        method: "POST",
         url: `${BASE_URL}/api/members/${id}/actions/disapprove/`,
         headers: config,
       });
@@ -257,16 +254,16 @@ export const listProposals = () => {
     try {
       dispatch({ type: c.LIST_PROP_REQUEST });
 
-      const userData = JSON.parse(await localStorage.getItem('@userData'));
+      const userData = JSON.parse(localStorage.getItem("@userData"));
+      console.log("user data -> ", userData);
 
       const config = {
-        'Content-Type': 'application/json',
-        Accept: 'application/json',
+        "Content-Type": "application/json",
         Authorization: `Bearer ${userData.token}`,
       };
 
       const { data } = await axios({
-        method: 'GET',
+        method: "GET",
         url: `${BASE_URL}/api/proposals/`,
         headers: config,
       });
@@ -289,16 +286,16 @@ export const getProposal = (id) => {
     try {
       dispatch({ type: c.GET_PROP_REQUEST });
 
-      const userData = JSON.parse(await localStorage.getItem('@userData'));
+      const userData = JSON.parse(await localStorage.getItem("@userData"));
 
       const config = {
-        'Content-Type': 'application/json',
-        Accept: 'application/json',
+        "Content-Type": "application/json",
+        Accept: "application/json",
         Authorization: `Bearer ${userData.token}`,
       };
 
       const { data } = await axios({
-        method: 'GET',
+        method: "GET",
         url: `${BASE_URL}/api/proposals/${id}/`,
         headers: config,
       });
@@ -321,16 +318,16 @@ export const createProposal = (title, summary, content) => {
     try {
       dispatch({ type: c.CREATE_PROP_REQUEST });
 
-      const userData = JSON.parse(await localStorage.getItem('@userData'));
+      const userData = JSON.parse(await localStorage.getItem("@userData"));
 
       const config = {
-        'Content-Type': 'application/json',
-        Accept: 'application/json',
+        "Content-Type": "application/json",
+        Accept: "application/json",
         Authorization: `Bearer ${userData.token}`,
       };
 
       const { data } = await axios({
-        method: 'POST',
+        method: "POST",
         url: `${BASE_URL}/api/proposals/`,
         headers: config,
         data: {
@@ -358,16 +355,16 @@ export const positiveVote = (id) => {
     try {
       dispatch({ type: c.POSITIVE_PROP_REQUEST });
 
-      const userData = JSON.parse(await localStorage.getItem('@userData'));
+      const userData = JSON.parse(await localStorage.getItem("@userData"));
 
       const config = {
-        'Content-Type': 'application/json',
-        Accept: 'application/json',
+        "Content-Type": "application/json",
+        Accept: "application/json",
         Authorization: `Bearer ${userData.token}`,
       };
 
       const { data } = await axios({
-        method: 'POST',
+        method: "POST",
         url: `${BASE_URL}/api/proposals/${id}/actions/upvote/`,
         headers: config,
       });
@@ -390,16 +387,16 @@ export const negativeVote = (id) => {
     try {
       dispatch({ type: c.NEGATIVE_PROP_REQUEST });
 
-      const userData = JSON.parse(await localStorage.getItem('@userData'));
+      const userData = JSON.parse(await localStorage.getItem("@userData"));
 
       const config = {
-        'Content-Type': 'application/json',
-        Accept: 'application/json',
+        "Content-Type": "application/json",
+        Accept: "application/json",
         Authorization: `Bearer ${userData.token}`,
       };
 
       const { data } = await axios({
-        method: 'POST',
+        method: "POST",
         url: `${BASE_URL}/api/proposals/${id}/actions/downvote/`,
         headers: config,
       });

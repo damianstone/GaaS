@@ -1,11 +1,11 @@
-import { applyMiddleware, combineReducers, createStore } from 'redux';
-import thunk from 'redux-thunk';
+import { applyMiddleware, combineReducers, createStore } from "redux";
+import thunk from "redux-thunk";
 import {
   userRegisterReducer,
   userLoginReducer,
   followUserReducer,
   listMemberReducer,
-  getMemberReducer, 
+  getMemberReducer,
   approveMemberReducer,
   disapproveMemberReducer,
   listProposalsReducer,
@@ -13,7 +13,7 @@ import {
   createProposalReducer,
   positiveVoteReducer,
   negativeVoteReducer,
-} from './reducers/reducers';
+} from "./reducers/reducers";
 
 const reducer = combineReducers({
   userRegister: userRegisterReducer,
@@ -30,7 +30,13 @@ const reducer = combineReducers({
   negativeVote: negativeVoteReducer,
 });
 
-const initialState = {};
+const userInfoFromStorage = localStorage.getItem("@userData")
+  ? JSON.parse(localStorage.getItem("@userData"))
+  : null;
+
+const initialState = {
+  userLogin: { userInfo: userInfoFromStorage },
+};
 
 const middleware = [thunk];
 
