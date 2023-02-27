@@ -80,7 +80,9 @@ class ProposalViewSet(ModelViewSet):
         except:
             return Response({"detail": "proposal doesnt exist"})
 
-        return Response({"detail": "upvote success"})
+        serializer = serializers.ProposalSerializer(
+            proposal, many=False)
+        return Response(serializer.data)
 
     # downvote endpoint
     @action(detail=True, methods=["post"], url_path=r"actions/downvote")
@@ -93,7 +95,9 @@ class ProposalViewSet(ModelViewSet):
         except:
             return Response({"detail": "proposal doesnt exist"})
 
-        return Response({"detail": "downvote success"})
+        serializer = serializers.ProposalSerializer(
+            proposal, many=False)
+        return Response(serializer.data)
 
     # add comment endpoint
     @action(detail=True, methods=["post"], url_path=r"actions/add_comment")
