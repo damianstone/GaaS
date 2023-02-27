@@ -1,5 +1,137 @@
-.screen {
+.homeScreen {
   width: 100%;
-  height: 100%;
+  height: 100vh;
+  background: #6495ed;
+}
 
+.titleContainer {
+  margin: 0;
+  padding: 30px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.avatar {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 60px;
+  height: 60px;
+  border-radius: 100px;
+  background-color: blueviolet;
+}
+
+.initials {
+  color: white;
+}
+
+.createContainerButton {
+  width: 200px;
+  height: 50px;
+  background-color: blueviolet;
+  text-align: center;
+  border-radius: 15px;
+  cursor: pointer;
+}
+
+.createContainerButton:hover {
+  opacity: 0.5;
+}
+
+.createButton {
+  font-size: 15px;
+  color: white;
+}
+
+.title {
+  padding: 0;
+  margin: 0;
+  font-size: 30px;
+  color: white;
+}
+
+.proposalSection {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  align-content: center;
+  padding: 30px;
+  overflow: scroll;
+  overflow: hidden;
+}
+
+.proposalContainer {
+  width: 50%;
+  padding: 20px;
+  background-color: aliceblue;
+  border-radius: 30px;
+}
+
+.propTitleContainer {
+  margin-top: 15px;
+  margin-bottom: 15px;
+}
+
+.propTitle {
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.propSumContainer {
+  margin-top: 15px;
+  margin-bottom: 15px;
+}
+
+.propSum {
+  font-size: 15px;
+}
+
+.propContContainer {
+}
+
+.propCont {
+  font-size: 15px;
+}
+
+.bContainer {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+}
+
+.buttonContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.positiveButton {
+  display: flex;
+  padding: 0;
+  margin: 0;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+  width: 140px;
+  height: 50px;
+  border-radius: 15px;
+  background-color: green;
+  color: white;
+}
+
+.negativeButton {
+  display: flex;
+  padding: 0;
+  margin: 0;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+  width: 140px;
+  height: 50px;
+  border-radius: 15px;
+  background-color: red;
+  color: white;
 }
