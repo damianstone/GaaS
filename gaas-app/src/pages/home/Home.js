@@ -29,7 +29,7 @@ const Home = () => {
   // }
 
   return (
-    <div className='screen'>
+    <div className='homeScreen'>
       <div className='titleContainer'>
         <div className='avatar'>
           <p className='initials'>DS</p>
