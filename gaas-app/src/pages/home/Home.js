@@ -13,6 +13,20 @@ const Home = () => {
   const proposalsRed = useSelector((state) => state.listProposals);
   const { loading, data: proposals, error } = proposalsRed;
 
+  const positiveReducer = useSelector((state) => state.positiveVote);
+  const {
+    loading: loadingPositive,
+    data: dataPositive,
+    error: errorPositive,
+  } = positiveReducer;
+
+  const negativeReducer = useSelector((state) => state.negativeVote);
+  const {
+    loading: loadingNegative,
+    data: dataNegative,
+    error: errorNegative,
+  } = negativeReducer;
+
   useEffect(() => {
     const valueFromLocalStorage = localStorage.getItem('@userData');
     setAuth(valueFromLocalStorage);
@@ -24,22 +38,28 @@ const Home = () => {
 
   useEffect(() => {
     dispatch(f.listProposals());
-  }, []);
+  }, [dataPositive, dataNegative, dispatch]);
 
   const handleLogout = () => {
     dispatch(f.logout());
   };
 
-  const handlePositive = () => {};
+  const handlePositive = (id) => {
+    dispatch(f.positiveVote(id));
+  };
 
-  const handleNegative = () => {};
+  const handleNegative = (id) => {
+    dispatch(f.negativeVote(id));
+  };
 
-  const handleCreate = () => {};
+  const handleCreate = () => {
+    history.push('/create-porposal');
+  };
 
   return (
     <div className='homeScreen'>
       <div className='titleContainer'>
-        <div className="profileContainer">
+        <div className='profileContainer'>
           <div className='avatar'>
             <p className='initials'>DS</p>
           </div>
@@ -68,8 +88,8 @@ const Home = () => {
                 content={proposal.content}
                 pv_porcentage={proposal.pv_porcentage}
                 nv_porcentage={proposal.nv_porcentage}
-                handlePositive={handlePositive}
-                handleNegative={handleNegative}
+                handlePositive={() => handlePositive(proposal.id)}
+                handleNegative={() => handleNegative(proposal.id)}
               />
             ))}
         </div>

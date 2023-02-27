@@ -1,6 +1,22 @@
 import React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 
 const Proposal = (props) => {
+  const positiveReducer = useSelector((state) => state.positiveVote);
+  const {
+    loading: loadingPositive,
+    data: dataPositive,
+    error: errorPositive,
+  } = positiveReducer;
+
+  const negativeReducer = useSelector((state) => state.negativeVote);
+  const {
+    loading: loadingNegative,
+    data: dataNegative,
+    error: errorNegative,
+  } = negativeReducer;
+
   return (
     <div className='proposalContainer'>
       <div className='propTitleContainer'>
@@ -11,6 +27,11 @@ const Proposal = (props) => {
       </div>
       <div className='propContContainer'>
         <p className='propCont'>{props.content}</p>
+      </div>
+      <div>
+        {loadingNegative || (loadingPositive && <p>Loading...</p>)}
+        {dataPositive && <p className="positive">You voted positive!!</p>}
+        {dataNegative && <p className="negative">You voted negative!!</p>}
       </div>
       <div className='bContainer'>
         <div className='buttonContainer'>
