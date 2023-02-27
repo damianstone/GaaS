@@ -137,23 +137,30 @@ class ProposalViewSet(ModelViewSet):
         # users = list(models.User.objects.all())
         users = models.User.objects.all()
 
-        ranodom_user = users[random.randint(0, len(users) - 1)]
-        print(ranodom_user)
+        random_user = users[random.randint(0, len(users) - 1)]
+        print(random_user)
 
         for proposal in proposals_data:
             title = proposal["title"]
             summary = proposal["summary"]
             content = proposal["content"]
 
-            try:
-                # create a new proposal data model
-                proposal = models.Proposal.objects.create(
-                    title=title, summary=summary, content=content, author=ranodom_user)
-                serializer = serializers.ProposalSerializer(
-                    proposal, many=False)
-            except:
-                message = {"detail": "error with creating proposal"}
-                return Response(message, status=status.HTTP_400_BAD_REQUEST)
+            # try:
+            # create a new proposal data model
+            proposal = models.Proposal.objects.create(
+                title=title, summary=summary, content=content, author=random_user)
+
+            for i in range(len(users)):
+                if random.randint(0, 4) == 1:
+                    proposal.upvote(users[i])
+                elif random.randint(0, 8) == 2:
+                    proposal.downvote(users[i])
+
+            serializer = serializers.ProposalSerializer(
+                proposal, many=False)
+            # except:
+            #     message = {"detail": "error with creating proposal"}
+            #     return Response(message, status=status.HTTP_400_BAD_REQUEST)
 
         return Response({"detail": f"successfully generated {len(proposals_data)} proposals"})
 
