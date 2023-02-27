@@ -37,6 +37,8 @@ export const userLoginReducer = (state = {}, action) => {
         loading: false,
         error: action.payload,
       };
+    case 'USER_LOGOUT':
+      return {};
     default:
       return state;
   }
@@ -213,6 +215,8 @@ export const createProposalReducer = (state = {}, action) => {
         loading: false,
         error: action.payload,
       };
+    case 'CREATE_RESET':
+      return {};
     default:
       return state;
   }
@@ -235,6 +239,8 @@ export const positiveVoteReducer = (state = {}, action) => {
         loading: false,
         error: action.payload,
       };
+    case 'POSITIVE_RESET':
+      return {};
     default:
       return state;
   }
@@ -257,6 +263,8 @@ export const negativeVoteReducer = (state = {}, action) => {
         loading: false,
         error: action.payload,
       };
+    case 'NEGATIVE_RESET':
+      return {};
     default:
       return state;
   }
