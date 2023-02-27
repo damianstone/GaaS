@@ -1,0 +1,49 @@
+.daily-operations-container {
+    max-width: 800px;
+    margin: auto;
+    padding: 20px;
+}
+
+.daily-operations-heading {
+    text-align: center;
+    font-size: 36px;
+    font-weight: bold;
+    margin-bottom: 30px;
+}
+
+.daily-operations-card {
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+.daily-operations-card-title {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.daily-operations-card-description {
+    font-size: 18px;
+    margin-bottom: 10px;
+}
+
+.daily-operations-card-actions {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+
+.daily-operations-card-actions button {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    cursor: pointer;
+}
+
+.daily-operations-card-actions button:hover {
+    background-color: #0069d9;
+}

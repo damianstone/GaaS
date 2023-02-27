@@ -1,0 +1,66 @@
+.politician-profile-container {
+    max-width: 800px;
+    margin: auto;
+    padding: 20px;
+}
+
+.politician-info {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.politician-image {
+    max-width: 200px;
+    margin-right: 20px;
+    margin-bottom: 20px;
+}
+
+.politician-name {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.politician-party {
+    font-size: 18px;
+    margin-bottom: 10px;
+}
+
+.politician-location {
+    font-size: 16px;
+    margin-bottom: 10px;
+}
+
+.politician-bio {
+    font-size: 16px;
+    line-height: 1.5;
+}
+
+.politician-social {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.politician-social a {
+    display: inline-block;
+    width: 40px;
+    height: 40px;
+    background-color: #007bff;
+    border-radius: 50%;
+    color: #fff;
+    font-size: 20px;
+    text-align: center;
+    line-height: 40px;
+    margin: 10px;
+    transition: all 0.3s ease-in-out;
+}
+
+.politician-social a:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
+}

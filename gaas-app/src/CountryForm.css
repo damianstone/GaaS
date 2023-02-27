@@ -1,0 +1,22 @@
+/* <div class="form-container"><form id="country-form"><div class="form-group"><label for="name">Country Name</label><input type="text" class="form-control" id="name" name="name" required></div><div class="form-group"><label for="description">Description</label><textarea class="form-control" id="description" name="description" rows="3"></textarea></div><div class="form-group"><label for="budget">Budget</label><input type="number" class="form-control" id="budget" name="budget" required></div><button type="submit" class="btn btn-primary">Create Country</button></form></div>.form-container {
+    max-width: 500px;
+    margin: auto;
+    padding: 20px;
+} */
+
+.form-group label {
+    font-weight: bold;
+}
+
+.form-group input,
+.form-group textarea {
+    width: 100%;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+
+.btn-primary {
+    background-color: #007bff;
+    border-color: #007bff;
+}

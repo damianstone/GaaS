@@ -1,0 +1,27 @@
+.profile-form-container {
+    max-width: 500px;
+    margin: auto;
+    padding: 20px;
+}
+
+.profile-form-title {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    font-weight: bold;
+}
+
+.form-group input,
+.form-group textarea {
+    width: 100%;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+
+.btn-primary {
+    background-color: #007bff;
+    border-color: #007bff;
+}
