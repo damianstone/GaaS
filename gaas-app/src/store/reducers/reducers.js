@@ -215,6 +215,8 @@ export const createProposalReducer = (state = {}, action) => {
         loading: false,
         error: action.payload,
       };
+    case 'CREATE_RESET':
+      return {};
     default:
       return state;
   }

@@ -47,7 +47,7 @@ const Home = () => {
   };
 
   const handleCreate = () => {
-    history.push('/create-porposal');
+    history.push('/create-proposal');
   };
 
   return (
@@ -57,15 +57,15 @@ const Home = () => {
           <div className='avatar'>
             <p className='initials'>DS</p>
           </div>
-          <div className='logoutcom'>
-            <p className='logoutText' onClick={handleLogout}>
+          <div className='logoutcom' onClick={handleLogout}>
+            <p className='logoutText'>
               LOGOUT
             </p>
           </div>
         </div>
         <h3 className='title'>GaaS - Proposals</h3>
-        <div className='createContainerButton'>
-          <p className='createButton' onClick={handleCreate}>
+        <div className='createContainerButton' onClick={handleCreate}>
+          <p className='createButton' >
             Create Proposal
           </p>
         </div>
