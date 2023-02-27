@@ -5,6 +5,9 @@ from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet
 from api import models, serializers
 
+from data.proposals_data import proposals_data
+import random
+
 
 class ProposalViewSet(ModelViewSet):
     queryset = models.Proposal.objects.all()
@@ -33,7 +36,8 @@ class ProposalViewSet(ModelViewSet):
             # create a new proposal data model
             proposal = models.Proposal.objects.create(
                 title=title, summary=summary, content=content, author=current_user)
-            serializer = serializers.ProposalSerializer(proposal, many=False)
+            serializer = serializers.CreateProposalSerializer(
+                proposal, many=False)
             return Response(serializer.data)
         except:
             message = {"detail": "error with creating proposal"}
@@ -124,3 +128,36 @@ class ProposalViewSet(ModelViewSet):
         except:
             message = {"detail": "error with getting comments"}
             return Response(message, status=status.HTTP_400_BAD_REQUEST)
+
+    # generate proposals and add to database endpoint
+    @action(detail=False, methods=["get"], url_path=r"actions/generate_proposals", permission_classes=[AllowAny])
+    def generate_proposals(self, request):
+        # read json file and create proposals
+        # models.Proposal.generate_proposals()
+        # users = list(models.User.objects.all())
+        users = models.User.objects.all()
+
+        ranodom_user = users[random.randint(0, len(users) - 1)]
+        print(ranodom_user)
+
+        for proposal in proposals_data:
+            title = proposal["title"]
+            summary = proposal["summary"]
+            content = proposal["content"]
+
+            try:
+                # create a new proposal data model
+                proposal = models.Proposal.objects.create(
+                    title=title, summary=summary, content=content, author=ranodom_user)
+                serializer = serializers.ProposalSerializer(
+                    proposal, many=False)
+            except:
+                message = {"detail": "error with creating proposal"}
+                return Response(message, status=status.HTTP_400_BAD_REQUEST)
+
+        return Response({"detail": f"successfully generated {len(proposals_data)} proposals"})
+
+    @action(detail=False, methods=["post"], url_path=r"actions/destroy-all", permission_classes=[AllowAny])
+    def destroy_all(self, request):
+        models.Proposal.objects.all().delete()
+        return Response({"detail": "success"})
