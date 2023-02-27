@@ -9,6 +9,7 @@ import './Login.css';
 const Login = () => {
   const disptach = useDispatch();
   const history = useHistory();
+  const [auth, setAuth] = useState();
   const [register, setRegister] = useState(false);
   const [email, setEmail] = useState(null);
   const [password, setPassword] = useState(null);
@@ -17,8 +18,6 @@ const Login = () => {
   const user = useSelector((state) => state.userLogin);
   const { loading: loadingLogin, data: userLogin, error: loginError } = user;
 
-  console.log(loginError);
-
   const registerReducer = useSelector((state) => state.userRegister);
   const {
     loading: loadingRegister,
@@ -26,9 +25,14 @@ const Login = () => {
     error: registerError,
   } = registerReducer;
 
-  console.log(registerUser);
+  useEffect(() => {
+    const valueFromLocalStorage = localStorage.getItem('@userData');
+    setAuth(valueFromLocalStorage);
 
-  useEffect(() => {}, []);
+    if (auth) {
+      history.goBack();
+    }
+  }, []);
 
   const handleLogin = () => {
     console.log('login');

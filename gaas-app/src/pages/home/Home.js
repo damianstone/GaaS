@@ -8,22 +8,27 @@ import './Home.css';
 const Home = () => {
   const dispatch = useDispatch();
   const history = useHistory();
-
   const [auth, setAuth] = useState(null);
 
   const proposalsRed = useSelector((state) => state.listProposals);
   const { loading, data: proposals, error } = proposalsRed;
 
-  console.log(proposals);
-
   useEffect(() => {
     const valueFromLocalStorage = localStorage.getItem('@userData');
     setAuth(valueFromLocalStorage);
+
+    if (auth && !auth.token) {
+      history.push('/login');
+    }
   }, []);
 
   useEffect(() => {
     dispatch(f.listProposals());
   }, []);
+
+  const handleLogout = () => {
+    dispatch(f.logout());
+  };
 
   const handlePositive = () => {};
 
@@ -31,15 +36,18 @@ const Home = () => {
 
   const handleCreate = () => {};
 
-  if (auth && !auth.token) {
-    history.push('/login');
-  }
-
   return (
     <div className='homeScreen'>
       <div className='titleContainer'>
-        <div className='avatar'>
-          <p className='initials'>DS</p>
+        <div className="profileContainer">
+          <div className='avatar'>
+            <p className='initials'>DS</p>
+          </div>
+          <div className='logoutcom'>
+            <p className='logoutText' onClick={handleLogout}>
+              LOGOUT
+            </p>
+          </div>
         </div>
         <h3 className='title'>GaaS - Proposals</h3>
         <div className='createContainerButton'>

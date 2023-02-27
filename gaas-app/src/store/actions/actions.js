@@ -85,6 +85,11 @@ export const login = (email, password) => {
   };
 };
 
+export const logout = () => (dispatch) => {
+  localStorage.removeItem('@userData');
+  dispatch({ type: "USER_LOGOUT" });
+};
+
 export const followUser = (id) => {
   return async (dispatch) => {
     try {
