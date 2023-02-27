@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-function ProposalForm() {
+function ProfileForm() {
   const [proposal, setProposal] = useState("");
   const [description, setDescription] = useState("");
 
@@ -61,7 +61,7 @@ function ProposalForm() {
   );
 }
 
-export default ProposalForm;
+export default ProfileForm;
 
 // In this example, the ProposalForm component is a form with two input fields for the title and description of the proposal. The handleSubmit function sends a POST request to the /api/proposals endpoint with the title and description data in the request body using the axios library. If the request is successful, the form fields are cleared and the user is notified that the proposal was created successfully. If there is an error during the request, the error is logged to the console and the user is notified of the error.
 // In this modified version, we have added the name attributes to the form inputs for proposal and description, and we have also set up an onSubmit function that sends the form data to the backend using the fetch API. The handleSubmit function is called when the form is submitted, and it prevents the default form submission behavior, creates a data object with the form values, and sends a POST request to the backend with that data. Note that the fetch API is used here to make a request to the backend API. The URL /api/proposals assumes that the backend is set up to receive POST requests at that endpoint, and that it will handle the request appropriately. The response from the server is logged to the console for debugging purposes.

@@ -1,20 +1,28 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Navbar, Nav, Container, Row, NavDropdown } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
-// import { logout } from '../actions/userActions';
+import * as f from '../store/actions/actions';
 
 const Header = () => {
   const dispatch = useDispatch();
 
   // * example how to get the data from the backend
-  const userLoginReducer = useSelector((state) => state.userLogin);
+  // const userLoginReducer = useSelector((state) => state.userLogin);
+
+  // const {
+  //   loading: loadingUser,
+  //   data: userInfo,
+  //   error: userError,
+  // } = userLoginReducer;
+
+  const loginReducer = useSelector((state) => state.userLogin);
 
   const {
     loading: loadingUser,
     data: userInfo,
-    error: userError,
-  } = userLoginReducer;
+    error: errorUser,
+  } = loginReducer;
 
   const logoutHandler = () => {
     // dispatch the fucntion that is in the actions folder
@@ -26,7 +34,7 @@ const Header = () => {
       <Navbar bg='dark' variant='dark' expand='lg' collapseOnSelect>
         <Container>
           <LinkContainer to='/'>
-            <Navbar.Brand>Ecommerce</Navbar.Brand>
+            <Navbar.Brand>GaaS</Navbar.Brand>
           </LinkContainer>
 
           <Navbar.Toggle aria-controls='basic-navbar-nav' />
@@ -34,7 +42,7 @@ const Header = () => {
             <Nav className='ml-auto'>
               <LinkContainer to='/cart'>
                 <Nav.Link>
-                  <i className='fas fa-shopping-cart'></i>Cart
+                  <i className='fas fa-shopping-cart'></i>
                 </Nav.Link>
               </LinkContainer>
 
