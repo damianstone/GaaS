@@ -34,6 +34,7 @@ const Home = () => {
 
   const handleLogout = () => {
     dispatch(f.logout());
+    history.push("/login");
   };
 
   const handlePositive = (id) => {
