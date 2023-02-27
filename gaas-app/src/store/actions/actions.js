@@ -1,7 +1,7 @@
-import axios from 'axios';
-import * as c from '../../constants/constants';
+import axios from "axios";
+import * as c from "../../constants/constants";
 
-const BASE_URL = 'http://127.0.0.1:8000';
+const BASE_URL = "http://127.0.0.1:8000";
 
 export const userRegister = (email, password, repeated_password) => {
   return async (dispatch) => {
@@ -9,11 +9,11 @@ export const userRegister = (email, password, repeated_password) => {
       dispatch({ type: c.USER_REGISTER_REQUEST });
 
       const config = {
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
       };
 
       const { data } = await axios({
-        method: 'POST',
+        method: "POST",
         url: `${BASE_URL}/api/users/register/`,
         headers: config,
         data: {
@@ -24,7 +24,7 @@ export const userRegister = (email, password, repeated_password) => {
       });
 
       await localStorage.setItem(
-        '@userData',
+        "@userData",
         JSON.stringify({
           token: data.token,
         })
@@ -48,16 +48,16 @@ export const userLogin = (email, password) => {
     try {
       dispatch({ type: c.LOGIN_REQUEST });
 
-      const userData = JSON.parse(await localStorage.getItem('@userData'));
+      const userData = JSON.parse(await localStorage.getItem("@userData"));
 
       const config = {
-        'Content-Type': 'application/json',
-        Accept: 'application/json',
+        "Content-Type": "application/json",
+        Accept: "application/json",
         Authorization: `Bearer ${userData.token}`,
       };
 
       const { data } = await axios({
-        method: 'POST',
+        method: "POST",
         url: `${BASE_URL}/api/users/login/`,
         headers: config,
         data: {
@@ -67,7 +67,7 @@ export const userLogin = (email, password) => {
       });
 
       await localStorage.setItem(
-        '@userData',
+        "@userData",
         JSON.stringify({
           token: data.token,
         })
@@ -85,3 +85,7 @@ export const userLogin = (email, password) => {
     }
   };
 };
+
+// // createProposal api request
+// export const createProposal = (title, summary, content) => {
+//   return async (dispatch) => {
