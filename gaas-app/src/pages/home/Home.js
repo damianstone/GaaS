@@ -14,18 +14,10 @@ const Home = () => {
   const { loading, data: proposals, error } = proposalsRed;
 
   const positiveReducer = useSelector((state) => state.positiveVote);
-  const {
-    loading: loadingPositive,
-    data: dataPositive,
-    error: errorPositive,
-  } = positiveReducer;
+  const { data: dataPositive } = positiveReducer;
 
   const negativeReducer = useSelector((state) => state.negativeVote);
-  const {
-    loading: loadingNegative,
-    data: dataNegative,
-    error: errorNegative,
-  } = negativeReducer;
+  const { data: dataNegative } = negativeReducer;
 
   useEffect(() => {
     const valueFromLocalStorage = localStorage.getItem('@userData');
@@ -45,10 +37,12 @@ const Home = () => {
   };
 
   const handlePositive = (id) => {
+    dispatch({ type: 'NEGATIVE_RESET' });
     dispatch(f.positiveVote(id));
   };
 
   const handleNegative = (id) => {
+    dispatch({ type: 'POSITIVE_RESET' });
     dispatch(f.negativeVote(id));
   };
 
@@ -77,12 +71,15 @@ const Home = () => {
         </div>
       </div>
       {loading ? (
-        <p>Loading...</p>
+        <div className='proposalSection'>
+          <p className='logoutText'>Loading...</p>
+        </div>
       ) : (
         <div className='proposalSection'>
           {proposals &&
             proposals.results.map((proposal) => (
               <Proposal
+                id={proposal.id}
                 title={proposal.title}
                 summary={proposal.summary}
                 content={proposal.content}

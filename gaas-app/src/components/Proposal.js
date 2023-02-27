@@ -7,14 +7,12 @@ const Proposal = (props) => {
   const {
     loading: loadingPositive,
     data: dataPositive,
-    error: errorPositive,
   } = positiveReducer;
 
   const negativeReducer = useSelector((state) => state.negativeVote);
   const {
     loading: loadingNegative,
     data: dataNegative,
-    error: errorNegative,
   } = negativeReducer;
 
   return (
@@ -30,8 +28,8 @@ const Proposal = (props) => {
       </div>
       <div>
         {loadingNegative || (loadingPositive && <p>Loading...</p>)}
-        {dataPositive && <p className="positive">You voted positive!!</p>}
-        {dataNegative && <p className="negative">You voted negative!!</p>}
+        {dataPositive?.id === props.id && <p className="positive">You voted positive!!</p>}
+        {dataNegative?.id === props.id && <p className="negative">You voted negative!!</p>}
       </div>
       <div className='bContainer'>
         <div className='buttonContainer'>

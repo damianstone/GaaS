@@ -237,6 +237,8 @@ export const positiveVoteReducer = (state = {}, action) => {
         loading: false,
         error: action.payload,
       };
+    case 'POSITIVE_RESET':
+      return {};
     default:
       return state;
   }
@@ -259,6 +261,8 @@ export const negativeVoteReducer = (state = {}, action) => {
         loading: false,
         error: action.payload,
       };
+    case 'NEGATIVE_RESET':
+      return {};
     default:
       return state;
   }
