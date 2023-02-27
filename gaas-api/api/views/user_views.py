@@ -25,7 +25,7 @@ class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
 class MyTokenObtainPairView(TokenObtainPairView):
     serializer_class = MyTokenObtainPairSerializer
 
-    
+
 @api_view(["GET"])
 def display_commons_parties(self, request, pk=None):
     url = "https://members-api.parliament.uk/api/Parties/GetActive/2/"
@@ -35,7 +35,8 @@ def display_commons_parties(self, request, pk=None):
         return Response(response.json())
     else:
         return Response({"detail": "Error: Unable to fetch data from external API"}, status=response.status_code)
-    
+
+
 @api_view(["GET"])
 def display_lords_parties(self, request, pk=None):
     url = "https://members-api.parliament.uk/api/Parties/GetActive/1/"
@@ -82,13 +83,13 @@ class UserViewSet(ModelViewSet):
     def update(self, request, pk=None):
         current_user = request.user
         data = request.data
-        
+
         try:
             user = models.User.objects.get(pk=pk)
         except:
             message = {"detail": "User with this email already exist"}
             return Response(message, status=status.HTTP_400_BAD_REQUEST)
-        
+
         if current_user.id != user.id:
             message = {"detail": "Update other users is not allowed"}
             return Response(message, status=status.HTTP_401_UNAUTHORIZED)
@@ -103,50 +104,49 @@ class UserViewSet(ModelViewSet):
         user_serializer = serializers.UserSerializer(
             user, many=False)
         return Response(user_serializer.data)
-    
+
     @action(detail=True, methods=["post"], url_path=r"actions/follow-user")
     def follow(self, request, pk=None):
         current_user = request.user
-        
+
         try:
             user_to_follow = models.User.objects.get(pk=pk)
         except:
             message = {"detail": "User with this email already exist"}
             return Response(message, status=status.HTTP_400_BAD_REQUEST)
-        
-        
+
         user_to_follow.followers.add(current_user)
-        
+
         # serializer = serializers.UserSerializer(user_to_follow)
         # return Response(serializer.data)
         return Response({"detail": "success"}, status=status.HTTP_200_OK)
-    
+
     @action(detail=True, methods=["post"], url_path=r"actions/unfollow-user")
     def unfollow(self, request, pk=None):
         current_user = request.user
-        
+
         try:
             user_to_unfollow = models.User.objects.get(pk=pk)
         except:
             message = {"detail": "User with this email already exist"}
             return Response(message, status=status.HTTP_400_BAD_REQUEST)
-        
-        
+
         user_to_unfollow.followers.remove(current_user)
-        
+
         # serializer = serializers.UserSerializer(user_to_follow)
         # return Response(serializer.data)
         return Response({"detail": "success"}, status=status.HTTP_200_OK)
-    
+
     @action(detail=False, methods=["post"], url_path=r"actions/add-photo")
     def add_photo(self, request, pk=None):
         current_user = request.user
-        
-        fields_serializer = serializers.PhotoSerializer(data=request.data, partial=True)
+
+        fields_serializer = serializers.PhotoSerializer(
+            data=request.data, partial=True)
         fields_serializer.is_valid(raise_exception=True)
-        
+
         current_user.photo = fields_serializer.validated_data["photo"]
-        
+
         serializer = serializers.UserSerializer(current_user)
         return Response(serializer.data)
 
@@ -157,4 +157,14 @@ class UserViewSet(ModelViewSet):
         current_user.save()
         serializer = serializers.UserSerializer(current_user)
         return Response(serializer.data)
-    
+
+    # generate fake users
+    @action(detail=False, methods=["post"], url_path=r"actions/generate-users", permission_classes=[AllowAny])
+    def generate_users(self, request, pk=None):
+        for i in range(0, 100):
+            try:
+                models.User.objects.create(
+                    email=f"user{i}@gmail.com", password=make_password("123456"), firstname=f"firstname{i}", lastname=f"lastname{i}")
+            except:
+                pass
+        return Response({"detail": "success"}, status=status.HTTP_200_OK)
