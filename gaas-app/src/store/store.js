@@ -5,7 +5,7 @@ import {
   userLoginReducer,
   followUserReducer,
   listMemberReducer,
-  getMemberReducer,
+  getMemberReducer, 
   approveMemberReducer,
   disapproveMemberReducer,
   listProposalsReducer,

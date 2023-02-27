@@ -5,6 +5,7 @@ import Header from './components/Header';
 import Footer from './components/Footer';
 
 import Home from './pages/home/Home';
+import Login from './pages/login/Login';
 
 import './App.css';
 
@@ -12,7 +13,8 @@ const App = () => {
   return (
     <Router>
       <Switch>
-        <Route path='/' component={Home} />
+        <Route exact path='/' component={Home} />
+        <Route path='/login' component={Login} />
         {/* <Route path='/login' component={LoginScreen} />
           <Route path='/register' component={RegisterScreen} /> 
           <Route path='/myprofile' component={RegisterScreen} /> 
